@@ -128,11 +128,16 @@ Translations of the guide are available in the following languages:
     e = M * c**2
     ```
 
-* No spaces after `(`, `[` or before `]`, `)`.
+* No spaces after `[` and before `]`.
 
     ```Ruby
-    some(arg).other
     [1, 2, 3].length
+    ```
+
+* Use spaces afer `(` and before `)`.
+
+    ```Ruby
+    some( arg ).other
     ```
 
 * Indent `when` as deep as `case`. I know that many would disagree
@@ -182,12 +187,12 @@ Translations of the guide are available in the following languages:
 
     ```Ruby
     # starting point (line is too long)
-    def send_mail(source)
+    def send_mail( source )
       Mailer.deliver(to: 'bob@example.com', from: 'us@example.com', subject: 'Important message', body: source.text)
     end
 
     # bad (normal indent)
-    def send_mail(source)
+    def send_mail( source )
       Mailer.deliver(
         to: 'bob@example.com',
         from: 'us@example.com',
@@ -196,20 +201,21 @@ Translations of the guide are available in the following languages:
     end
 
     # bad (double indent)
-    def send_mail(source)
+    def send_mail( source )
       Mailer.deliver(
           to: 'bob@example.com',
           from: 'us@example.com',
           subject: 'Important message',
-          body: source.text)
+          body: source.text )
     end
 
     # good
-    def send_mail(source)
-      Mailer.deliver(to: 'bob@example.com',
-                     from: 'us@example.com',
-                     subject: 'Important message',
-                     body: source.text)
+    def send_mail( source )
+      Mailer.deliver( to: 'bob@example.com',
+                      from: 'us@example.com',
+                      subject: 'Important message',
+                      body: source.text
+                    )
     end
     ```
 
@@ -238,7 +244,7 @@ Translations of the guide are available in the following languages:
        # body omitted
      end
 
-     def some_method_with_arguments(arg1, arg2)
+     def some_method_with_arguments( arg1, arg2 )
        # body omitted
      end
      ```
@@ -301,24 +307,6 @@ Translations of the guide are available in the following languages:
       something_else
     end
     ```
-
-* Never use `if x: ...` - it is removed in Ruby 1.9. Use
-  the ternary operator instead.
-
-    ```Ruby
-    # bad
-    result = if some_condition: something else something_else end
-
-    # good
-    result = some_condition ? something : something_else
-    ```
-
-* Never use `if x; ...`. Use the ternary operator instead.
-
-* Use `when x then ...` for one-line cases. The alternative syntax
-  `when x: ...` is removed in Ruby 1.9.
-
-* Never use `when x; ...`. See the previous rule.
 
 * Use `&&/||` for boolean expressions, `and/or` for control flow.  (Rule
   of thumb: If you have to use outer parentheses, you are using the
@@ -441,13 +429,13 @@ Translations of the guide are available in the following languages:
       # omitted
     end
 
-    temperance = Person.new('Temperance', 30)
+    temperance = Person.new( 'Temperance', 30 )
     temperance.name
 
     puts temperance.age
 
-    x = Math.sin(y)
-    array.delete(e)
+    x = Math.sin( y )
+    array.delete( e )
     ```
 
 * Prefer `{...}` over `do...end` for single-line blocks.  Avoid using
@@ -463,6 +451,7 @@ Translations of the guide are available in the following languages:
     names.each { |name| puts name }
 
     # bad
+    # Javier likes this because it's more explicit
     names.each do |name|
       puts name
     end
@@ -484,12 +473,12 @@ Translations of the guide are available in the following languages:
 
     ```Ruby
     # bad
-    def some_method(some_arr)
+    def some_method( some_arr )
       return some_arr.size
     end
 
     # good
-    def some_method(some_arr)
+    def some_method( some_arr )
       some_arr.size
     end
     ```
@@ -500,7 +489,7 @@ Translations of the guide are available in the following languages:
     # bad
     def ready?
       if self.last_reviewed_at > self.last_updated_at
-        self.worker.update(self.content, self.options)
+        self.worker.update( self.content, self.options )
         self.status = :in_progress
       end
       self.status == :verified
@@ -509,7 +498,7 @@ Translations of the guide are available in the following languages:
     # good
     def ready?
       if last_reviewed_at > last_updated_at
-        worker.update(content, options)
+        worker.update( content, options )
         self.status = :in_progress
       end
       status == :verified
@@ -548,12 +537,12 @@ Translations of the guide are available in the following languages:
 
     ```Ruby
     # bad
-    def some_method(arg1=:default, arg2=nil, arg3=[])
+    def some_method( arg1=:default, arg2=nil, arg3=[] )
       # do something...
     end
 
     # good
-    def some_method(arg1 = :default, arg2 = nil, arg3 = [])
+    def some_method( arg1 = :default, arg2 = nil, arg3 = [] )
       # do something...
     end
     ```
@@ -561,31 +550,18 @@ Translations of the guide are available in the following languages:
     While several Ruby books suggest the first style, the second is much more prominent
     in practice (and arguably a bit more readable).
 
-* Avoid line continuation (\\) where not required. In practice, avoid using
-  line continuations at all.
-
-    ```Ruby
-    # bad
-    result = 1 - \
-             2
-
-    # good (but still ugly as hell)
-    result = 1 \
-             - 2
-    ```
-
 * Using the return value of `=` (an assignment) is ok, but surround the
   assignment with parentheses.
 
     ```Ruby
     # good - shows intended use of assignment
-    if (v = array.grep(/foo/)) ...
+    if ( v = array.grep( /foo/ ) ) ...
 
     # bad
-    if v = array.grep(/foo/) ...
+    if v = array.grep( /foo/ ) ...
 
     # also good - shows intended use of assignment and has correct precedence.
-    if (v = self.next_value) == 'hello' ...
+    if ( v = self.next_value ) == 'hello' ...
     ```
 
 * Use `||=` freely to initialize variables.
@@ -614,10 +590,10 @@ would happen if the current value happened to be `false`.)
 
     ```Ruby
     # bad
-    f (3 + 2) + 1
+    f ( 3 + 2 ) + 1
 
     # good
-    f(3 + 2) + 1
+    f( 3 + 2 ) + 1
     ```
 
 * If the first argument to a method begins with an open parenthesis,
@@ -698,6 +674,35 @@ you if you forget either of the rules above!
       end
     end
     ```
+* Do not use abbreviations in method on variable names (except in the case of one or two line blocks)
+    ```Ruby
+    # bad
+    def camp_updater
+      # code omitted
+    end
+
+    # Goooood
+    def campaign_updater
+      # code omitted
+    end
+    ```
+
+* Use expressive/explict method and variable names.  A long name is better than a confusing one.
+  A good rule is that the fewer times a method is used the longer the method name can be
+  ```Ruby
+  # A method that filters CYB campaigns that now have performance campaigns
+
+  # bad
+  def filter_inactive_cyb_campaigns
+    # The name of the method only tells half the story
+  end
+
+  def filter_out_cyb_campaigns_covered_by_performance_campaigns
+    # we know exactly what this method does if it is called out of the context of the module
+    # given the nature of the method it is unlikely to be called frequently
+  end
+
+  ```
 
 * Define the non-bang (safe) method in terms of the bang (dangerous)
   one if possible.
@@ -778,7 +783,7 @@ at all.
     def bar
       # FIXME: This has crashed occasionally since v3.2.1. It may
       #   be related to the BarBazUtil upgrade.
-      baz(:quux)
+      baz( :quux )
     end
     ```
 
@@ -886,44 +891,6 @@ to create instances of a particular class.
     class Person
       def self.create(options_hash)
         # body omitted
-      end
-    end
-    ```
-
-* Prefer [duck-typing](http://en.wikipedia.org/wiki/Duck_typing) over inheritance.
-
-    ```Ruby
-    # bad
-    class Animal
-      # abstract method
-      def speak
-      end
-    end
-
-    # extend superclass
-    class Duck < Animal
-      def speak
-        puts 'Quack! Quack'
-      end
-    end
-
-    # extend superclass
-    class Dog < Animal
-      def speak
-        puts 'Bau! Bau!'
-      end
-    end
-
-    # good
-    class Duck
-      def speak
-        puts 'Quack! Quack'
-      end
-    end
-
-    class Dog
-      def speak
-        puts 'Bau! Bau!'
       end
     end
     ```
@@ -1179,20 +1146,6 @@ in *Ruby* now, not in *Python*.
     end
     ```
 
-* Release external resources obtained by your program in an ensure
-block.
-
-    ```Ruby
-    f = File.open('testfile')
-    begin
-      # .. process
-    rescue
-      # .. handle error
-    ensure
-      f.close unless f.nil?
-    end
-    ```
-
 * Favor the use of exceptions for the standard library over
 introducing new exception classes.
 
@@ -1306,7 +1259,7 @@ strings.
     class Person
       attr_reader :first_name, :last_name
 
-      def initialize(first_name, last_name)
+      def initialize( first_name, last_name )
         @first_name = first_name
         @last_name = last_name
       end
@@ -1541,21 +1494,3 @@ patch them.)
 * Avoid more than three levels of block nesting.
 * Be consistent. In an ideal world, be consistent with these guidelines.
 * Use common sense.
-
-# Contributing
-
-Nothing written in this guide is set in stone. It's my desire to work
-together with everyone interested in Ruby coding style, so that we could
-ultimately create a resource that will be beneficial to the entire Ruby
-community.
-
-Feel free to open tickets or send pull requests with improvements. Thanks in
-advance for your help!
-
-# Spread the Word
-
-A community-driven style guide is of little use to a community that
-doesn't know about its existence. Tweet about the guide, share it with
-your friends and colleagues. Every comment, suggestion or opinion we
-get makes the guide just a little bit better. And we want to have the
-best possible guide, don't we?
