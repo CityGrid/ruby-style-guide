@@ -138,6 +138,14 @@ Translations of the guide are available in the following languages:
 
     ```Ruby
     some( arg ).other
+
+    # nested parens can get confusing if you do this.  Use your judgement
+
+    # potentially confusing
+    some_method( 23, some_other_method( 9283 ), ( 2 + 3 ) )
+
+    # marginally more readable (maybe?)
+    some_method( 23, some_other_method(9283), (2 +3) )
     ```
 
 * Indent `when` as deep as `case`. I know that many would disagree
