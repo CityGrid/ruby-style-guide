@@ -219,13 +219,27 @@ Translations of the guide are available in the following languages:
 
     # good
     def send_mail( source )
-      Mailer.deliver( to: 'bob@example.com',
+      Mailer.deliver( 
+                      to: 'bob@example.com',
                       from: 'us@example.com',
                       subject: 'Important message',
                       body: source.text
                     )
     end
     ```
+
+* When you have very long lists of arguments or hash keys, give the opening and closing 
+  marker their own line
+
+  ```Ruby
+  some_hash = {
+                some_key: "hello",
+                another_key: "goodbye",
+                this_is_getting_long: "giraffe",
+                sample: "Anteater",
+                chicken: "nugget"
+              }
+  ```
 
 * Add underscores to big numeric literals to improve their readability.
 
